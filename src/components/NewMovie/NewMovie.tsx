@@ -7,6 +7,7 @@ interface Props {
 }
 
 const INITIAL_FORM_STATE = {
+  id: '',
   title: '',
   description: '',
   imgUrl: '',
@@ -14,34 +15,25 @@ const INITIAL_FORM_STATE = {
   imdbId: '',
 };
 
-interface FormData {
-  title: string;
-  description: string;
-  imgUrl: string;
-  imdbUrl: string;
-  imdbId: string;
-}
-
 export const NewMovie: React.FC<Props> = ({ onAdd }) => {
   const [count, setCount] = useState(0);
 
-  const [form, setForm] = useState<FormData>(INITIAL_FORM_STATE);
+  const [form, setForm] = useState<Movie>(INITIAL_FORM_STATE);
 
-  const handleFieldChange =
-    (fieldName: keyof FormData) => (newValue: string) => {
-      setForm(prevForm => ({
-        ...prevForm,
-        [fieldName]: newValue,
-      }));
-    };
+  const handleFieldChange = (fieldName: keyof Movie) => (newValue: string) => {
+    setForm(prevForm => ({
+      ...prevForm,
+      [fieldName]: newValue,
+    }));
+  };
 
   const handleReset = () => {
     setForm(INITIAL_FORM_STATE);
     setCount(prevCount => prevCount + 1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     onAdd(form);
     handleReset();
   };

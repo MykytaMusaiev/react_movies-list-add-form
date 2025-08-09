@@ -15,7 +15,7 @@ export const App = () => {
 
   const handleAddMovie = (newMovie: Omit<Movie, 'id'>) => {
     const movieWithId: Movie = {
-      id: String(Date.now()),
+      id: crypto.randomUUID(),
       ...newMovie,
     };
 
