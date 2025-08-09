@@ -5,11 +5,17 @@ import { NewMovie } from './components/NewMovie';
 import moviesFromServer from './api/movies.json';
 import { Movie } from './types/Movie';
 
+const preparedMovies: Movie[] = moviesFromServer.map(movie => ({
+  ...movie,
+  id: movie.imdbId,
+}));
+
 export const App = () => {
-  const [movies, setMovies] = useState(moviesFromServer);
+  const [movies, setMovies] = useState(preparedMovies);
 
   const handleAddMovie = (newMovie: Omit<Movie, 'id'>) => {
     const movieWithId: Movie = {
+      id: String(Date.now()),
       ...newMovie,
     };
 
